@@ -34,8 +34,14 @@ def getSolvers():
         solverApplications[i] = re.search('(?:([\w ]+), )?for ([\w ]+)',solverApplications[i] ,re.I).group(2).split()
 
     solvers = list(zip(solverNames, solverFormats, solverCommands, solverApplications))
-
-    return(solvers)
+    ret = []
+    for s in solvers:
+        r = {}
+        r['name'] = s[0]
+        r['prover_command'] = s[2]
+        r['dialects'] = s[3]
+        ret.append(r)
+    return ret
 
 
 """ provername is a string equivalent to one of those in the first element
@@ -69,7 +75,12 @@ def request(provername, parameters, problem, time):
     stat = re.search('(?:.*says )(.*)(?: - CPU.*)', results[0],  re.I).group(1)
     cpu = float(re.search('(?:.*CPU = )(.*)(?: WC.*)', results[0],  re.I).group(1))
     wc = float(re.search('(?:.*WC = )(\S*)(?: .*)', results[0],  re.I).group(1))
-    return({stat:(cpu, wc, response.text)})
+    ret = {}
+    ret['szs_status'] = stat
+    ret['cpu'] = cpu
+    ret['wc'] = wc
+    ret['raw'] = response.text
+    return ret
 
 '''
 testprob = "fof(pel24_1,axiom,\
