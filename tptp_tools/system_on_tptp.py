@@ -52,11 +52,7 @@ getSolvers """
 """ problem is a path to a problem file """
 """ time is max time-out in seconds, default is 60"""
 def request(provername, parameters, problem, time):
-    provers = getSolvers()
-    for i in range(len(provers)):
-        if provername in provers[i][0]:
-            solver = provers[i]
-    
+
 
     payload={'TPTPProblem':'',
             'ProblemSource':'FORMULAE',
