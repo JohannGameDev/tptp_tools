@@ -24,5 +24,22 @@
   "!=":"\\neq",
   "_": "\\_",
   "[": "",
-  "]":""
+  "]":"",
+  "$oType":"\\sigma",
+  "$o":"\\sigma",
+  "$iType":"\\iota",
+  "$i":"\\iota",
+  "$tType":"{\\$tType}",
+  "$real":"\\mathbb{R}",
+  "rat": "\\mathbb{Q}",
+  "$int":"\\mathbb{N}",
+  "$true":"\\top",
+  "$false":"\\bot",
+  "^":"\\lambda",
+  "@":"",
+  "fof(":"",
+  ").":"",
+  "thf(":"",
+  ",":""
+
 }

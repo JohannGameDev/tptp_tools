@@ -64,6 +64,7 @@ def request(provername, parameters, problem, time):
     payload.update({'System___'+provername:provername, 'TimeLimit___'+provername:time, 'Command___'+provername:parameters})
 
     response = requests.post("http://www.tptp.org/cgi-bin/SystemOnTPTPFormReply", data=payload)
+    print(response.text)
 
     results = re.findall('^% RESULT:.*', response.text,re.M )
     if results == []:
@@ -135,7 +136,18 @@ def main():
         prob = probfile.read()
         print(request(args.solvername, args.parameters, prob, args.time))
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#   main()
+
+#problem  = "thf(1,conjecture,$true)."
+#time = 60
+#cmd = "run_Leo-III %s %d"
+#name = "Leo-III---1.3"
+#cmd = "leo --timeout %d --proofoutput 1 --foatp e --atp e=/home/tptp/Systems/LEO-II---1.7.0/eprover %s"
+#name = "LEO-II---1.7.0"
+#request(name,cmd,problem,time)
+#print(getSolvers())
+
+
 
 

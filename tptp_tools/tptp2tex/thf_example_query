@@ -1,0 +1,8 @@
+thf(union_distributes_over_intersection,conjecture,(
+^ [A: $i > $o,B: $i > $o,C: $i > $o] :
+( ( union @ A @ ( intersection @ B @ C ) )
+= ( intersection @ ( union @ A @ B ) @ ( union @ A @ C ) ) ) )).
+
+
+thf(some,axiom,(^ [A:a>b,B:a>b,X:a]: (
+  (A @ X) | (B @ X) ))).

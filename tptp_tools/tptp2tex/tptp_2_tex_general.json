@@ -1,0 +1,13 @@
+{"thf":{
+
+  "thf_formula":{
+    "thf_typed_variable":{
+      "latex": "{variable}_{{list_of_atomic_words(seperated with comma}"
+    },
+    "thf_variable": {
+      "latex": "which variable"
+    }
+    }
+  }
+}
+}
