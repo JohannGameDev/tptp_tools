@@ -1,9 +1,16 @@
 import json
 import sys
+import os
+import pathlib
 from antlr4 import *
-from tptp2tex.tLexer import tLexer
-from tptp2tex.tListener import tListener
-from tptp2tex.tParser import tParser
+if __name__ == '__main__':
+    from tptp2tex.tLexer import tLexer
+    from tptp2tex.tListener import tListener
+    from tptp2tex.tParser import tParser
+else :
+    from .tptp2tex.tLexer import tLexer
+    from .tptp2tex.tListener import tListener
+    from .tptp2tex.tParser import tParser
 import pyperclip # copy to clipboard(ctrl-c) can be pasted with ctrl-v
 
 """
@@ -19,10 +26,13 @@ class TptpListener(tListener):
     def __init__(self,**kwargs):
         # a tptp-file consists of one or more tptp-inputs (e.g. different axioms)
         self.latex_raw = []  # Contains all different tptp-inputs as raw latex
-        with open('tptp2tex/tptp_2_latex.json') as f:  # tptp_2_latex: represent tptp in latex(e.g. ! is \forall)
+        dir_root = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
+        filename = dir_root.joinpath("tptp2tex","tptp_2_latex.json")
+        with open(filename) as f:  # tptp_2_latex: represent tptp in latex(e.g. ! is \forall)
             data = json.load(f)
         self.tptp_2_latex = data
-        with open('tptp2tex/template.tex', 'r') as latex_template:
+        filename = dir_root.joinpath("tptp2tex","template.tex")
+        with open(filename, 'r') as latex_template:
             data = latex_template.read()
         self.latex_template = data
 #        self.styling = kwargs.get(0,None)
@@ -186,6 +196,18 @@ class LatexRaw:
 
         return raw_latex
 
+def create_latex_file(content_string):
+    lexer = tLexer(InputStream(content_string))
+    stream = CommonTokenStream(lexer)
+    parser = tParser(stream)
+    tree = parser.tptp_file()
+    printer = TptpListener() # <- Custom-Listener
+    walker = ParseTreeWalker()
+    walker.walk(printer, tree)
+    latex_raw = printer.create_latex_from_raw()
+    latex = printer.create_latex_file(latex_raw)
+    return latex
+
 def main(argv):
     input = FileStream(argv[1])
     lexer = tLexer(input)
@@ -200,7 +222,8 @@ def main(argv):
 
     latex_raw = printer.create_latex_from_raw()
     latex = printer.create_latex_file(latex_raw)
-    pyperclip.copy(latex) # for debugging
+    print(latex)
+    #pyperclip.copy(latex) # for debugging
 
 if __name__ == '__main__':
     main(sys.argv)

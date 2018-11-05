@@ -1,4 +1,5 @@
 from setuptools import setup
+from setuptools import find_packages
 
 def readme():
     with open('README.rst') as f:
@@ -18,7 +19,9 @@ setup(name='tptp_tools',
       author='León Dirmeier',
       author_email='leon.dirmeier@fu-berlin.de',
       license='MIT',
-      packages=['tptp_tools'],
+      #packages=['tptp2tex,tptp_tools'],
+      packages=find_packages(),
+      package_data={'': ['*.json','*.tex']},
       install_requires=[
           'lxml',
           'requests',
