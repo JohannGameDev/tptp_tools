@@ -25,3 +25,5 @@ fof(someone_not_john,conjecture,(
     ? [H] :
       ( human(H)
       & H != john ) )).
+
+      fof(all_created_equal,axiom,(! [H1,H2] :( ( human(H1)& human(H2) ) => created_equal(H1,H2) ) )).

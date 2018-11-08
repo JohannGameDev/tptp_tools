@@ -1,0 +1,60 @@
+{
+  "replacementSymbols": {
+    "!": "\\forall",
+    "Forall": "forall",
+    "?": "\\exists",
+    "Exists": "\\exists",
+    "<=>": "\\iff",
+    "Iff": "\\iff",
+    "=>": "\\Longrightarrow",
+    "Impl": "\\Longrightarrow",
+    "<=": "\\Longleftarrow",
+    "If": "\\Longleftarrow",
+    "<~>": "\\centernot\\Longleftrightarrow",
+    "Niff": "\\centernot\\Longleftrightarrow",
+    "~|": "\\downarrow",
+    "Nor": "\\downarrow",
+    "~&": "\\uparrow",
+    "Nand": "\\uparrow",
+    "|": "\\lor",
+    "Or": "\\lor",
+    "&": "\\land",
+    "And": "\\land",
+    "~": "\\lnot",
+    "Not": "\\lnot",
+    "!=": "\\neq",
+    "_": "\\_",
+    "[": "",
+    "]": "",
+    "$oType": "\\sigma",
+    "$o": "\\sigma",
+    "$iType": "\\iota",
+    "$i": "\\iota",
+    "$tType": "{\\$tType}",
+    "$real": "\\mathbb{R}",
+    "rat": "\\mathbb{Q}",
+    "$int": "\\mathbb{N}",
+    "$true": "\\top",
+    "$false": "\\bot",
+    "^": "\\lambda",
+    "@": "",
+    "fof(": "",
+    ").": "",
+    "thf(": "",
+    ",": ""
+  },
+  "customParsing":{"thf_variable_list":{
+    "customTex":" {variable}_{{{atomic_defined_word}{atomic_word}}}",
+    "rules":["variable","atomic_defined_word","atomic_word"]
+  }},
+"rulesStyling":{
+  "functor":"\\tptpred",
+  "fof_formula":"\\tptpblue"
+},
+  "deleteRules":["name","formula_role"],
+  "latexPreamble":["\\newcommand\\tptpfontsize{\\footnotesize}","\\newcommand\\tptpred[1]{\\textcolor{red}{#1}}",
+    "\\newcommand\\tptpblue[1]{\\textcolor{blue}{#1}}","\\newcommand\\tptpgreen[1]{\\textcolor{green}{#1}}",
+    "\\newcommand\\tptpyellow[1]{\\textcolor{yellow}{#1}}"]
+
+
+}

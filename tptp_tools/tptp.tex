@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper,english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{stackengine}
+\usepackage{mathtools}
+\usepackage{fancyvrb}
+%\usepackage[showframe]{geometry}
+\usepackage{geometry}
+\usepackage{fancyvrb}
+\usepackage{centernot}
+
+\newcommand\tptpfontsize{\footnotesize}
+
+\newcommand\tptpred[1]{\textcolor{red}{#1}}
+\newcommand\tptpblue[1]{\textcolor{blue}{#1}}
+\newcommand\tptpgreen[1]{\textcolor{green}{#1}}
+\newcommand\tptpyellow[1]{\textcolor{yellow}{#1}}
+
+
+
+\title{swp-logic}
+\author{Some Author}
+\date{October 2018}
+
+\begin{document}
+\section{TPTP}
+
+\begin{enumerate} 
+\item union\_distributes\_over\_intersection conjecture 
+\begin{flalign*} 
+ (\lambda   A_{\iota \sigma } _{} B_{\iota \sigma } _{} C_{\iota \sigma } :((\tptpred{union} A (\tptpred{intersection} B C))=(\tptpred{intersection} (\tptpred{union} A B) (\tptpred{union} A C)))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(union_distributes_over_intersection,conjecture,(^[A:$i>$o,B:$i>$o,C:$i>$o]:((union@A@(intersection@B@C))=(intersection@(union@A@B)@(union@A@C))))).
+\end{Verbatim}
+
+\end{enumerate} 
+
+
+\end{document}
