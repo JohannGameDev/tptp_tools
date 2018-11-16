@@ -43,6 +43,7 @@
     "thf(": "",
     ",": ""
   },
+  "formulas":["thf_formula","fof_formula"],
   "customParsing":{"thf_variable_list":{
     "customTex":" {variable}_{{{atomic_defined_word}{atomic_word}}}",
     "rules":["variable","atomic_defined_word","atomic_word"]

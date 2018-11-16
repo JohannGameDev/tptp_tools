@@ -27,9 +27,6 @@ class TptpListener(tListener):
         # a tptp-file consists of one or more tptp-inputs (e.g. different axioms)
         self.latex_raw = []  # Contains all different tptp-inputs as raw latex
         dir_root = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
-        print(tptp_conf)
-        tptp_conf = tptp_conf.replace('"','\\"')
-        print(tptp_conf)
         data = json.loads(tptp_conf)
         self.tptp_2_latex = data.get("replacementSymbols",None)
         filename = dir_root.joinpath("tptp2tex","template.tex")
@@ -37,12 +34,13 @@ class TptpListener(tListener):
             template_data = latex_template.read()
         self.latex_template = template_data
         self.styling = data.get("rulesStyling",None)
-        print(self.styling)
-        self.item_header = {"name":"","formula_role":""}# will be displayed as item header TODO: whats with plain formula
+        self.item_header = {"name":"","formula_role":"","og_formula":""}# will be displayed as item header
         self.delete = data.get("deleteRules",None)
         self.custom_parsing = data.get("customParsing",None)
+        self.possible_formulas = data.get("formulas")
         self.current_raw_latex = LatexRaw(self.styling, self.tptp_2_latex)  # Current raw latex code from tptp-input
         self.styled_latex = ""
+        self.latex_preamble = data.get("latexPreamble",None)
 
     """for current tptp_input create a raw_latex objects that holds info about latex code from tree"""
     def enterTptp_input(self, ctx:tParser.Tptp_inputContext):
@@ -52,7 +50,7 @@ class TptpListener(tListener):
         self.current_raw_latex.add_tex(self.match_style(ctx))  # This is the point where the Tree will be parsed into Latex
         self.current_raw_latex.add_name(self.item_header["name"])
         self.current_raw_latex.add_formula_role(self.item_header["formula_role"])
-#        self.current_raw_latex.add_tptp_og_formula(self.item_header["fof_formula"])
+        self.current_raw_latex.add_tptp_og_formula(self.item_header["og_formula"])
         self.latex_raw.append(self.current_raw_latex) # collect all raw_latex to create a latex file from template
 
     """This function is to determine whether it should be parsed with default latex conversion or custom latex commands
@@ -66,8 +64,8 @@ class TptpListener(tListener):
                 need.append(self.match_custom(child,rules))
             custom_tex = ""
             for n in need:
-                custom_tex += self.custom_parsing.get(tParser.ruleNames[ctx.getRuleIndex()],None).get("customTex",None) .\
-                        format(variable=n.get("variable"),atomic_defined_word=n.get("atomic_defined_word"),atomic_word=n.get("atomic_word")) # TODO: This string in json
+                if any(value for value in n.values()): # if there is some content in values, format and append it
+                    custom_tex += self.custom_parsing.get(tParser.ruleNames[ctx.getRuleIndex()],None).get("customTex",None).format(**n)
         else:
             custom_tex = self.match_style(ctx)
 
@@ -85,7 +83,8 @@ class TptpListener(tListener):
                 if isinstance(child,TerminalNode):
                     ret += self.match_style(child)
                 else:
-
+                    if tParser.ruleNames[child.getRuleIndex()] in self.possible_formulas:# Save plain thf/fof...defined in conf formula as og_formula
+                        self.item_header["og_formula"] = child.getText()
                     if tParser.ruleNames[child.getRuleIndex()] in self.item_header: # This rules are parsed to be a header
                         self.item_header[tParser.ruleNames[child.getRuleIndex()]] = child.getText() # fill in dictionary with predefined header
                     if tParser.ruleNames[child.getRuleIndex()] in self.styling: # Here are the rules that get a sorunding tex-tag
@@ -130,16 +129,6 @@ class TptpListener(tListener):
             text = text.replace(k, self.tptp_2_latex.get(k) + " ")
         return text
 
-    def enterName(self, ctx: tParser.NameContext):
-        self.current_raw_latex.add_name(ctx.getText())
-
-    def enterFormula_role(self, ctx: tParser.Formula_roleContext):
-        self.current_raw_latex.add_formula_role(ctx.getText())
-
-    def enterFof_formula(self, ctx: tParser.Fof_formulaContext):
-        self.current_raw_latex.add_tptp_og_formula(ctx.getText())
-        self.latex_raw.append(self.current_raw_latex)
-
     def create_latex_from_raw(self):
         latex = "\\begin{enumerate} \n"
         for raw_latex in self.latex_raw:
@@ -150,7 +139,8 @@ class TptpListener(tListener):
 
 
     def create_latex_file(self,latex_raw):
-        #print("creating latex file from template....")
+        latex_preamble = "\n".join(self.latex_preamble)
+        self.latex_template = self.latex_template.replace("___tptp_latex_preamble___", latex_preamble)
         latex = self.latex_template.replace("___tptp_latex___",latex_raw)
         with open('tptp.tex', 'w') as latex_template:
             latex_template.write(latex)
@@ -197,19 +187,35 @@ class LatexRaw:
 
         return raw_latex
 
-
-def main(argv):
-    lexer = tLexer(InputStream(argv[1]))
+def create_latex_file(content_string,tptp_conf):
+    #this function will be called from outside
+    lexer = tLexer(InputStream(content_string))
     stream = CommonTokenStream(lexer)
     parser = tParser(stream)
     tree = parser.tptp_file()
-    printer = TptpListener(argv[2])  # <- Custom-Listener
+    printer = TptpListener(tptp_conf)  # <- Custom-Listener
     walker = ParseTreeWalker()
     walker.walk(printer, tree)
-    latex_raw = printer.create_latex_from_raw() # create latex body from all tptp-inputs(latex-raw-pbjects)
-    latex = printer.create_latex_file(latex_raw) # create latex file
-#    print(latex)
+    latex_raw = printer.create_latex_from_raw()  # create latex body from all tptp-inputs(latex-raw-pbjects)
+    latex = printer.create_latex_file(latex_raw)  # create latex file
     return latex
+
+def main(argv):
+    example_call("examples/tptp_conf.json","examples/syn1.p")
+
+
+def example_call(conf_file,query_file):
+    dir_root = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
+    filename = dir_root.joinpath("tptp2tex", conf_file)
+    with open(filename, 'r') as tptp_conf:
+        conf = tptp_conf.read()
+    filename = dir_root.joinpath("tptp2tex",query_file)
+    with open(filename, 'r') as example_query:
+        example = example_query.read()
+
+    latex = create_latex_file(example, conf)
+    print(latex)
+    pyperclip.copy(latex)  # for debugging
 
 if __name__ == '__main__':
     main(sys.argv)
