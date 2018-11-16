@@ -15,6 +15,7 @@ import pyperclip # copy to clipboard(ctrl-c) can be pasted with ctrl-v
 
 """
 This module is intended for parsing the tptp input to latex and creating a tptp.tex 
+@Author Johann Strama
 """
 
 """
