@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper,english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{stackengine}
+\usepackage{mathtools}
+\usepackage{fancyvrb}
+%\usepackage[showframe]{geometry}
+\usepackage{geometry}
+\usepackage{fancyvrb}
+\usepackage{centernot}
+
+
+\newcommand\tptpfontsize{\footnotesize}
+\newcommand\tptpred[1]{\textcolor{red}{#1}}
+\newcommand\tptpblue[1]{\textcolor{blue}{#1}}
+\newcommand\tptpgreen[1]{\textcolor{green}{#1}}
+\newcommand\tptpyellow[1]{\textcolor{yellow}{#1}}
+
+
+
+\title{swp-logic}
+\author{Some Author}
+\date{October 2018}
+
+\begin{document}
+\section{TPTP}
+
+\begin{enumerate} 
+\item p0\_type type 
+\begin{flalign*} 
+ (\tptpred{p0}:\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(p0_type,type,(p0:$o)).
+\end{Verbatim}
+
+\item q0\_type type 
+\begin{flalign*} 
+ (\tptpred{q0}:\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(q0_type,type,(q0:$o)).
+\end{Verbatim}
+
+\item r0\_type type 
+\begin{flalign*} 
+ (\tptpred{r0}:\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(r0_type,type,(r0:$o)).
+\end{Verbatim}
+
+\item s0\_type type 
+\begin{flalign*} 
+ (\tptpred{s0}:\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(s0_type,type,(s0:$o)).
+\end{Verbatim}
+
+\item propositional axiom 
+\begin{flalign*} 
+ ((\tptpred{p0}\land \lnot (\tptpred{q0}))\Longrightarrow (\tptpred{r0}\lor \lnot (\tptpred{s0}))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(propositional,axiom,((p0&~(q0))=>(r0|~(s0)))).
+\end{Verbatim}
+
+\item a\_type type 
+\begin{flalign*} 
+ (\tptpred{a}:\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(a_type,type,(a:$i)).
+\end{Verbatim}
+
+\item b\_type type 
+\begin{flalign*} 
+ (\tptpred{b}:\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(b_type,type,(b:$i)).
+\end{Verbatim}
+
+\item h\_type type 
+\begin{flalign*} 
+ (\tptpred{h}:\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(h_type,type,(h:$i)).
+\end{Verbatim}
+
+\item f\_type type 
+\begin{flalign*} 
+ (\tptpred{f}:\iota >\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(f_type,type,(f:$i>$i)).
+\end{Verbatim}
+
+\item g\_type type 
+\begin{flalign*} 
+ (\tptpred{g}:\iota >\iota >\iota >\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(g_type,type,(g:$i>$i>$i>$i)).
+\end{Verbatim}
+
+\item p\_type type 
+\begin{flalign*} 
+ (\tptpred{p}:\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(p_type,type,(p:$i>$o)).
+\end{Verbatim}
+
+\item q\_type type 
+\begin{flalign*} 
+ (\tptpred{q}:\iota >\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(q_type,type,(q:$i>$i>$o)).
+\end{Verbatim}
+
+\item r\_type type 
+\begin{flalign*} 
+ (\tptpred{r}:\iota >\iota >\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(r_type,type,(r:$i>$i>$i>$o)).
+\end{Verbatim}
+
+\item s\_type type 
+\begin{flalign*} 
+ (\tptpred{s}:\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(s_type,type,(s:$i>$o)).
+\end{Verbatim}
+
+\item first\_order axiom 
+\begin{flalign*} 
+ (\forall   X_{\iota } :(((\tptpred{p} X)\lor \lnot (\tptpred{q} X \tptpred{a}))\Longrightarrow \exists   Y_{\iota } Z_{\iota } :((\tptpred{r} X (\tptpred{f} Y) (\tptpred{g} X (\tptpred{f} Y) Z))\land \lnot (\tptpred{s} (\tptpred{f} (\tptpred{f} (\tptpred{f} \tptpred{b}))))))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(first_order,axiom,(![X:$i]:(((p@X)|~(q@X@a))=>?[Y:$i,Z:$i]:((r@X@(f@Y)@(g@X@(f@Y)@Z))&~(s@(f@(f@(f@b)))))))).
+\end{Verbatim}
+
+\item equality axiom 
+\begin{flalign*} 
+ (\exists   Y_{\iota } :\forall   X_{\iota } Z_{\iota } :(((\tptpred{f} Y)=(\tptpred{g} X (\tptpred{f} Y) Z))\lor ((\tptpred{f} (\tptpred{f} (\tptpred{f} \tptpred{b})))\neq \tptpred{a})\lor (X=(\tptpred{f} Y)))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(equality,axiom,(?[Y:$i]:![X:$i,Z:$i]:(((f@Y)=(g@X@(f@Y)@Z))|((f@(f@(f@b)))!=a)|(X=(f@Y))))).
+\end{Verbatim}
+
+\item true\_false axiom 
+\begin{flalign*} 
+ (\top \lor \bot ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(true_false,axiom,($true|$false)).
+\end{Verbatim}
+
+\item quoted\_proposition\_type type 
+\begin{flalign*} 
+ (\tptpred{'A proposition'}:\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(quoted_proposition_type,type,('A proposition':$o)).
+\end{Verbatim}
+
+\item quoted\_predicate\_type type 
+\begin{flalign*} 
+ (\tptpred{'A predicate'}:\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(quoted_predicate_type,type,('A predicate':$i>$o)).
+\end{Verbatim}
+
+\item quoted\_constant\_type type 
+\begin{flalign*} 
+ (\tptpred{'A constant'}:\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(quoted_constant_type,type,('A constant':$i)).
+\end{Verbatim}
+
+\item quoted\_function\_type type 
+\begin{flalign*} 
+ (\tptpred{'A function'}:\iota >\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(quoted_function_type,type,('A function':$i>$i)).
+\end{Verbatim}
+
+\item quoted\_escape\_type type 
+\begin{flalign*} 
+ (\tptpred{'A \'quoted \\ escape\''}:\iota ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(quoted_escape_type,type,('A \'quoted \\ escape\'':$i)).
+\end{Verbatim}
+
+\item single\_quoted axiom 
+\begin{flalign*} 
+ (\tptpred{'A proposition'}\lor (\tptpred{'A predicate'} \tptpred{a})\lor (\tptpred{p} \tptpred{'A constant'})\lor (\tptpred{p} (\tptpred{'A function'} \tptpred{a}))\lor (\tptpred{p} \tptpred{'A \'quoted \\ escape\''})) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(single_quoted,axiom,('A proposition'|('A predicate'@a)|(p@'A constant')|(p@('A function'@a))|(p@'A \'quoted \\ escape\''))).
+\end{Verbatim}
+
+\item useful\_connectives axiom 
+\begin{flalign*} 
+ (\forall   X_{\iota } :(((\tptpred{p} X)\Longleftarrow \lnot (\tptpred{q} X \tptpred{a}))\iff \exists   Y_{\iota } Z_{\iota } :((\tptpred{r} X (\tptpred{f} Y) (\tptpred{g} X (\tptpred{f} Y) Z))\centernot\Longleftrightarrow \lnot (\tptpred{s} (\tptpred{f} (\tptpred{f} (\tptpred{f} \tptpred{b}))))))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(useful_connectives,axiom,(![X:$i]:(((p@X)<=~(q@X@a))<=>?[Y:$i,Z:$i]:((r@X@(f@Y)@(g@X@(f@Y)@Z))<~>~(s@(f@(f@(f@b)))))))).
+\end{Verbatim}
+
+\item l1\_type type 
+\begin{flalign*} 
+ (\tptpred{l1}:\iota >(\iota >\sigma )>\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(l1_type,type,(l1:$i>($i>$o)>$o)).
+\end{Verbatim}
+
+\item l2\_type type 
+\begin{flalign*} 
+ (\tptpred{l2}:(\iota >(\iota >\iota )>\iota )>\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(l2_type,type,(l2:($i>($i>$i)>$i)>$o)).
+\end{Verbatim}
+
+\item lambda\_defn axiom 
+\begin{flalign*} 
+ (\tptpred{l1}=(\lambda   C_{\iota } P_{\iota \sigma } :(P C))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(lambda_defn,axiom,(l1=(^[C:$i,P:$i>$o]:(P@C)))).
+\end{Verbatim}
+
+\item lambda\_use axiom 
+\begin{flalign*} 
+ (\tptpred{l2} \lambda   C_{\iota } F_{\iota \iota } :(F C)) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(lambda_use,axiom,(l2@^[C:$i,F:$i>$i]:(F@C))).
+\end{Verbatim}
+
+\item new\_type type 
+\begin{flalign*} 
+ (\tptpred{new}:{\$tType} ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(new_type,type,(new:$tType)).
+\end{Verbatim}
+
+\item newc\_type type 
+\begin{flalign*} 
+ (\tptpred{newc}:\tptpred{new}) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(newc_type,type,(newc:new)).
+\end{Verbatim}
+
+\item newf\_type type 
+\begin{flalign*} 
+ (\tptpred{newf}:\tptpred{new}>\iota >\tptpred{new}) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(newf_type,type,(newf:new>$i>new)).
+\end{Verbatim}
+
+\item newp\_type type 
+\begin{flalign*} 
+ (\tptpred{newp}:\tptpred{new}>\iota >\sigma ) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(newp_type,type,(newp:new>$i>$o)).
+\end{Verbatim}
+
+\item new\_axiom axiom 
+\begin{flalign*} 
+ (\forall   X_{new} :(\tptpred{newp} (\tptpred{newf} \tptpred{newc} \tptpred{a}) \tptpred{a})) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(new_axiom,axiom,(![X:new]:(newp@(newf@newc@a)@a))).
+\end{Verbatim}
+
+\item 123 axiom 
+\begin{flalign*} 
+ (\forall   X_{\iota } :(((\tptpred{p} X)\lor \lnot (\tptpred{q} X \tptpred{a}))\Longrightarrow \exists   Y_{\iota } Z_{\iota } :((\tptpred{r} X (\tptpred{f} Y) (\tptpred{g} X (\tptpred{f} Y) Z))\land \lnot (\tptpred{s} (\tptpred{f} (\tptpred{f} (\tptpred{f} \tptpred{b}))))))) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(123,axiom,(![X:$i]:(((p@X)|~(q@X@a))=>?[Y:$i,Z:$i]:((r@X@(f@Y)@(g@X@(f@Y)@Z))&~(s@(f@(f@(f@b)))))))).
+\end{Verbatim}
+
+\item role\_hypothesis hypothesis 
+\begin{flalign*} 
+ (\tptpred{p} \tptpred{h}) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(role_hypothesis,hypothesis,(p@h)).
+\end{Verbatim}
+
+\item role\_conjecture conjecture 
+\begin{flalign*} 
+ (\exists   X_{\iota } :(\tptpred{p} X)) 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+thf(role_conjecture,conjecture,(?[X:$i]:(p@X))).
+\end{Verbatim}
+
+\item role\_conjecture conjecture 
+\begin{flalign*} 
+include('Axioms/SYN000\lambda 0.ax' 
+\end{flalign*} 
+\begin{Verbatim}[fontsize=\tptpfontsize]
+include('Axioms/SYN000^0.ax').
+\end{Verbatim}
+
+\end{enumerate} 
+
+
+\end{document}
